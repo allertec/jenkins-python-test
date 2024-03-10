@@ -64,7 +64,7 @@ pipeline {
           sh """
           aws s3 mv s3://andrzejb/artifact-latest .
           if [ -s artifact-latest ]; then
-            cat artifact-test
+            cat artifact-latest
           else
             echo "File artifact-latest is empty"
           fi
