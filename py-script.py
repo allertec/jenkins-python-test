@@ -17,7 +17,7 @@ elif get_os_platform == "Windows":
   os_version = platform.release()
 elif get_os_platform == "Linux":
   os_name = str(dist()[0])
-  os_version = str(dist()[1])
+  os_version = str(platform.dist()[1])
 
 
 file = open("artifact", "x")
