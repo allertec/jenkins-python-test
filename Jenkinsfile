@@ -40,7 +40,7 @@ pipeline {
              ls -l
              cat artifact
              docker rm -f py-script
-             docker rmi -f ${imagename}:latest""")
+             docker rmi -f ${imagename}""")
       }
     }
     stage('Upload S3'){
