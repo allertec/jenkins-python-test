@@ -19,4 +19,7 @@ elif get_os_platform == "Linux":
   os_name = str(dist()[0])
   os_version = str(dist()[1])
 
-print("You are running on: " + os_name + " - os_version")
+
+file = open("artifact", "x")
+file.write("You are running on: " + os_name + os_version)
+file.close()
