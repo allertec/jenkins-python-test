@@ -4,8 +4,6 @@ LABEL Maintainer="allertec"
 
 WORKDIR /usr/app/src
 
-COPY requirements.txt py-script.py  ./
-
-RUN pip3 install -r requirements.txt
+COPY py-script.py  ./
 
 CMD [ "python3", "./py-script.py"]
