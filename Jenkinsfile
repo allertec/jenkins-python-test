@@ -23,14 +23,14 @@ pipeline {
         }
       }
     }
-    stage('Upload to ECR') {
-      steps{
-        script {
-        (docker.withRegistry(${env.ecr_repo}, "ecr:us-east-1:aws-credentials") {
-          docker.image(${env.imagename}).push()
-          }) }
-        }
-    }
+    // stage('Upload to ECR') {
+    //   steps{
+    //     script {
+    //     (docker.withRegistry(${env.ecr_repo}, "ecr:us-east-1:aws-credentials") {
+    //       docker.image(${env.imagename}).push()
+    //       }) }
+    //     }
+    // }
     stage('Run image') {
       steps {
           sh("""docker run --name py-script ${imagename}
