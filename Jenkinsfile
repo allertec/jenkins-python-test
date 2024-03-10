@@ -29,26 +29,13 @@ pipeline {
           docker.image(${imagename}).push()
           })
         }
-      }
+    }
     stage('Run image') {
       steps {
           sh("""docker run --name py-script ${imagename}
              ls -l
              cat artifact""")
       }
-    }
-    stage('Upload S3'){
-      steps {
-        withEnv(['MYTOOL_HOME=/usr/local/mytool']) {
-          sh '$MYTOOL_HOME/bin/start'
-        }
-        withCredentials([usernamePassword(credentialsId: 'aws-keys', usernameVariable: "aws_access_key", passwordVariable: "aws_access_secret_key")]) {
-          sh """
-            aws s3 ./artifact s3://andrzejb
-          """
-        }
-      }  
-    }
     }
   }
 }
