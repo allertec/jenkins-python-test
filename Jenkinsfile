@@ -35,7 +35,9 @@ pipeline {
       steps {
           sh("""docker run --name py-script ${imagename}
              ls -l
-             cat artifact""")
+             cat artifact
+             docker rm -f py-script
+             docker rmi -f ${imagename}""")
       }
     }
     stage('Upload S3'){
