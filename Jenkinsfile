@@ -41,11 +41,13 @@ pipeline {
       }
     }
     stage('Upload S3'){
-       withCredentials([aws(credentialsId: "aws-credentials")]) {
+      steps {
+        withCredentials([aws(credentialsId: "aws-credentials")]) {
           sh """
              aws s3 mv artifact s3://andrzejb
           """
        }
+      }
     }
   }
 }
