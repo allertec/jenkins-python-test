@@ -1,6 +1,6 @@
 pipeline {
   environment {
-     imagename = "allertec/python-script:${currentBuild.number}"
+     imagename = "andrzejb/python-script:${currentBuild.number}"
      ecr_repo = "https://161192472568.dkr.ecr.us-east-1.amazonaws.com"
   }
   agent any
