@@ -26,8 +26,8 @@ pipeline {
     stage('Upload to ECR') {
       steps{
         script {
-        (docker.withRegistry(${ecr_repo}, "ecr:us-east-1:aws-credentials") {
-          docker.image(${imagename}).push()
+        (docker.withRegistry(${env.ecr_repo}, "ecr:us-east-1:aws-credentials") {
+          docker.image(${env.imagename}).push()
           }) }
         }
     }
