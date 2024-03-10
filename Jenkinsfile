@@ -28,8 +28,7 @@ pipeline {
           sh("""
              docker rm -f py-script
              docker run -v .:/usr/app/src --name py-script ${imagename}
-             ls -l
-             cat artifact
+             mv artifact artifact-${currentBuild.number}
              docker rm -f py-script
              docker rmi -f ${imagename}""")
       }
