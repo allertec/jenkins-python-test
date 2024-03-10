@@ -25,7 +25,9 @@ pipeline {
     }
     stage('Run image') {
       steps {
-          sh("""docker run --name py-script ${imagename}
+          sh("""
+             docker rm -f py-script
+             docker run --name py-script ${imagename}
              ls -l
              cat artifact
              docker rm -f py-script
