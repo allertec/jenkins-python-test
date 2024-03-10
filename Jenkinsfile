@@ -26,10 +26,11 @@ pipeline {
     stage('Run image') {
       steps {
           sh("""
-             rm -f artifact
+             rm -f artifact artifact-latest
              docker rm -f py-script
              docker run -v .:/usr/app/src --name py-script ${imagename}
-             mv artifact artifact-${currentBuild.number}
+             cp artifact artifact-${currentBuild.number}
+             cp artifact artifact-latest
              docker rm -f py-script""")
       }
     }
@@ -38,7 +39,8 @@ pipeline {
         withCredentials([[$class: "AmazonWebServicesCredentialsBinding", credentialsId: 'aws-credentials']]) {
           sh """
              aws s3 mv artifact-${currentBuild.number} s3://andrzejb
-             rm -f artifact-${currentBuild.number}
+             aws s3 mv artifact-latest s3://andrzejb
+             rm -f artifact-${currentBuild.number} artifact-latest artifact
           """
        }
       }
@@ -55,6 +57,16 @@ pipeline {
             """
           }
         }
+    }
+    stage('Test'){
+      steps {
+        input 'Do you want to run test?'
+        withCredentials([[$class: "AmazonWebServicesCredentialsBinding", credentialsId: 'aws-credentials']]) {
+          sh """
+          aws s3 mv s3://andrzejb/andrzej-latest .
+          """
+        }
+      }
     }
   }
 }
