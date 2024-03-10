@@ -10,6 +10,9 @@ pipeline {
  
       }
     }
+    stage('Setup docker.sock permissions') {
+      sh("""chmod 777 /var/run/docker.sock""")
+    }
     stage('Build image') {
       steps{
         script {
