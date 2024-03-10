@@ -64,6 +64,11 @@ pipeline {
         withCredentials([[$class: "AmazonWebServicesCredentialsBinding", credentialsId: 'aws-credentials']]) {
           sh """
           aws s3 mv s3://andrzejb/andrzej-latest .
+          if [[ -s andrzej-latest ]]; then
+            cat andrzej-test
+          else
+            echo "File andrzej-latest is empty"
+          fi
           """
         }
       }
