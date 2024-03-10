@@ -62,11 +62,11 @@ pipeline {
       steps {
         withCredentials([[$class: "AmazonWebServicesCredentialsBinding", credentialsId: 'aws-credentials']]) {
           sh """
-          aws s3 mv s3://andrzejb/andrzej-latest .
-          if [[ -s andrzej-latest ]]; then
-            cat andrzej-test
+          aws s3 mv s3://andrzejb/artifact-latest .
+          if [[ -s artifact-latest ]]; then
+            cat artifact-test
           else
-            echo "File andrzej-latest is empty"
+            echo "File artifact-latest is empty"
           fi
           """
         }
