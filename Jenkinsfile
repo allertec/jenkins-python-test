@@ -23,12 +23,10 @@ pipeline {
       }
     }
     stage('Run image') {
-      steps{
-        steps {
+      steps {
           sh("""docker run --name py-script ${imagename}
              ls -l
              cat artifact""")
-        }
       }
     }
   }
