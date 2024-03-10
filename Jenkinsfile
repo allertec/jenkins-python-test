@@ -26,11 +26,11 @@ pipeline {
     stage('Run image') {
       steps {
           sh("""
+             rm -f artifact
              docker rm -f py-script
              docker run -v .:/usr/app/src --name py-script ${imagename}
              mv artifact artifact-${currentBuild.number}
-             docker rm -f py-script
-             docker rmi -f ${imagename}""")
+             docker rm -f py-script""")
       }
     }
     stage('Upload S3'){
@@ -38,6 +38,7 @@ pipeline {
         withCredentials([[$class: "AmazonWebServicesCredentialsBinding", credentialsId: 'aws-credentials']]) {
           sh """
              aws s3 mv artifact-${currentBuild.number} s3://andrzejb
+             rm -f artifact-${currentBuild.number}
           """
        }
       }
@@ -49,6 +50,8 @@ pipeline {
               aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 161192472568.dkr.ecr.us-east-1.amazonaws.com
               docker tag ${imagename} 161192472568.dkr.ecr.us-east-1.amazonaws.com/${imagename}
               docker push 161192472568.dkr.ecr.us-east-1.amazonaws.com/${imagename}
+              docker rmi -f 161192472568.dkr.ecr.us-east-1.amazonaws.com/${imagename}
+              docker rmi -f ${imagename}
             """
           }
         }
