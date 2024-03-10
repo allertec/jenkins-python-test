@@ -60,7 +60,6 @@ pipeline {
     }
     stage('Test'){
       steps {
-        input 'Do you want to run test?'
         withCredentials([[$class: "AmazonWebServicesCredentialsBinding", credentialsId: 'aws-credentials']]) {
           sh """
           aws s3 mv s3://andrzejb/andrzej-latest .
