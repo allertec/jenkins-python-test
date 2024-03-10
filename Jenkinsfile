@@ -12,7 +12,7 @@ pipeline {
     }
     stage('Setup docker.sock permissions') {
       steps {
-        sh("""chmod 777 /var/run/docker.sock""")
+        sh("""sudo chmod 777 /var/run/docker.sock""")
       }
     }
     stage('Build image') {
